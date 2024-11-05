@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavbarMinimal } from '../Navbar/NavbarMinimal.tsx';
+import { NavbarMinimal } from '../../Components/Navbar/NavbarMinimal.tsx';
 import './Dashboard.module.css';
 
 const Dashboard: React.FC = () => {

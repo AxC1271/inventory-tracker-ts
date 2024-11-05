@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Center, Tooltip, UnstyledButton, Stack, rem, useMantineColorScheme } from '@mantine/core';
 import {
     IconHome2,
     IconGauge,
@@ -9,7 +10,8 @@ import {
     IconUser,
     IconSettings,
     IconLogout,
-    IconSwitchHorizontal,
+    IconSun,
+    IconMoon,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavbarMinimal.module.css';
@@ -31,25 +33,37 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
     );
 }
 
-const mockdata = [
-    { icon: IconHome2, label: 'Home' },
-    { icon: IconGauge, label: 'Dashboard' },
-    { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-    { icon: IconCalendarStats, label: 'Releases' },
-    { icon: IconUser, label: 'Account' },
-    { icon: IconFingerprint, label: 'Security' },
-    { icon: IconSettings, label: 'Settings' },
+const buttons = [
+    { icon: IconHome2, label: 'Home', path: '/' },
+    { icon: IconGauge, label: 'Dashboard', path: '/dashboard' },
+    { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
+    { icon: IconCalendarStats, label: 'Releases', path: '/releases' },
+    { icon: IconUser, label: 'Account', path: '/account' },
+    { icon: IconFingerprint, label: 'Security', path: '/security' },
+    { icon: IconSettings, label: 'Settings', path: '/settings' },
 ];
 
 export function NavbarMinimal() {
-    const [active, setActive] = useState(2);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+    const [active, setActive] = useState(0);
 
-    const links = mockdata.map((link, index) => (
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const activeIndex = buttons.findIndex(link => link.path === currentPath);
+        setActive(activeIndex);
+    }, [location.pathname]);
+
+    const links = buttons.map((link, index) => (
         <NavbarLink
             {...link}
             key={link.label}
             active={index === active}
-            onClick={() => setActive(index)}
+            onClick={() => {
+                setActive(index);
+                navigate(link.path);
+            }}
         />
     ));
 
@@ -66,7 +80,11 @@ export function NavbarMinimal() {
             </div>
 
             <Stack justify="center" gap={0}>
-                <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+                <NavbarLink
+                    icon={colorScheme === 'dark' ? IconSun : IconMoon}
+                    label="Toggle theme"
+                    onClick={toggleColorScheme}
+                />
                 <NavbarLink icon={IconLogout} label="Logout" />
             </Stack>
         </nav>
