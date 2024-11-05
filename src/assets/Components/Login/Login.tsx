@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
@@ -31,6 +32,12 @@ export function Login(props: PaperProps) {
     },
   });
 
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate('/dashboard');
+  }
+
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" fw={500}>
@@ -43,44 +50,44 @@ export function Login(props: PaperProps) {
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           {type === 'register' && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-              radius="md"
-            />
+              <TextInput
+                  label="Name"
+                  placeholder="Your name"
+                  value={form.values.name}
+                  onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+                  radius="md"
+              />
           )}
 
           <TextInput
-            required
-            label="Email"
-            placeholder="hello@case.edu"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-            error={form.errors.email && 'Invalid email'}
-            radius="md"
+              required
+              label="Email"
+              placeholder="hello@case.edu"
+              value={form.values.email}
+              onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+              error={form.errors.email && 'Invalid email'}
+              radius="md"
           />
 
           <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-            error={form.errors.password && 'Password should include at least 6 characters'}
-            radius="md"
+              required
+              label="Password"
+              placeholder="Your password"
+              value={form.values.password}
+              onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+              error={form.errors.password && 'Password should include at least 6 characters'}
+              radius="md"
           />
         </Stack>
 
         <Group justify="space-between" mt="xl">
           <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
             {type === 'register'
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
+                ? 'Already have an account? Login'
+                : "Don't have an account? Register"}
           </Anchor>
           <Button type="submit" radius="xl">
             {upperFirst(type)}
