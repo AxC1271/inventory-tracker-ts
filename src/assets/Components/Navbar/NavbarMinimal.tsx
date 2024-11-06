@@ -5,7 +5,7 @@ import {
     IconHome2,
     IconGauge,
     IconDeviceDesktopAnalytics,
-    IconFingerprint,
+    IconListSearch,
     IconCalendarStats,
     IconUser,
     IconSettings,
@@ -39,7 +39,7 @@ const buttons = [
     { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
     { icon: IconCalendarStats, label: 'Releases', path: '/releases' },
     { icon: IconUser, label: 'Account', path: '/account' },
-    { icon: IconFingerprint, label: 'Security', path: '/security' },
+    { icon: IconListSearch, label: 'Orders', path: '/orders' },
     { icon: IconSettings, label: 'Settings', path: '/settings' },
 ];
 

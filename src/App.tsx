@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Login } from './assets/Components/Login/Login';
 import Dashboard from './assets/Pages/Dashboard/Dashboard';
 import Settings from './assets/Pages/Settings/Settings';
+import Orders from './assets/Pages/Orders/Orders';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/orders" element={<Orders />} />
             </Routes>
         </MantineProvider>
     );
