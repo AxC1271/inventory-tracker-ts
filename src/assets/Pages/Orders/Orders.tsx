@@ -7,7 +7,7 @@ const Orders: React.FC = () => {
     return (
         <div className="orders-container">
             <NavbarMinimal />
-            <TableSort/>
+            <TableSort />
             <div className="orders-content">
             </div>
         </div>

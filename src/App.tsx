@@ -5,6 +5,9 @@ import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./assets/Pages/Dashboard/Dashboard";
 import Settings from "./assets/Pages/Settings/Settings";
 import Orders from "./assets/Pages/Orders/Orders";
+import Analytics from "./assets/Pages/Analytics/Analytics";
+import Releases from "./assets/Pages/Releases/Releases";
+import Account from "./assets/Pages/Account/Account";
 import { AuthProvider } from "../src/auth/AuthContext";
 import "@mantine/core/styles.css";
 import "./App.css";
@@ -38,6 +41,30 @@ const App: React.FC = () => {
           element={
             <PrivateRoute>
               <Orders />
+            </PrivateRoute>
+          }
+           />
+           <Route 
+          path="/analytics"
+          element={
+            <PrivateRoute>
+              <Analytics />
+            </PrivateRoute>
+          }
+           />
+           <Route 
+          path="/releases"
+          element={
+            <PrivateRoute>
+              <Releases />
+            </PrivateRoute>
+          }
+           />
+           <Route 
+          path="/account"
+          element={
+            <PrivateRoute>
+              <Account />
             </PrivateRoute>
           }
            />
