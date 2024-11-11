@@ -3,10 +3,10 @@ import { Login } from "./assets/Components/Login/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./assets/Pages/Dashboard/Dashboard";
-import Settings from "./assets/Pages/Settings/Settings";
+import ContactPage from "./assets/Pages/ContactPage/ContactPage";
 import Orders from "./assets/Pages/Orders/Orders";
 import Analytics from "./assets/Pages/Analytics/Analytics";
-import Releases from "./assets/Pages/Releases/Releases";
+import Inventory from "./assets/Pages/Inventory/Inventory";
 import Account from "./assets/Pages/Account/Account";
 import { AuthProvider } from "../src/auth/AuthContext";
 import "@mantine/core/styles.css";
@@ -29,10 +29,10 @@ const App: React.FC = () => {
           }
            />
            <Route 
-          path="/settings"
+          path="/contact-us"
           element={
             <PrivateRoute>
-              <Settings />
+              <ContactPage />
             </PrivateRoute>
           }
            />
@@ -53,10 +53,10 @@ const App: React.FC = () => {
           }
            />
            <Route 
-          path="/releases"
+          path="/inventory"
           element={
             <PrivateRoute>
-              <Releases />
+              <Inventory />
             </PrivateRoute>
           }
            />

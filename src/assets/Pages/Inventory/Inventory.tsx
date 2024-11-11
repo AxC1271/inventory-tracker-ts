@@ -1,16 +1,16 @@
 import { NavbarMinimal } from "../../Components/Navbar/NavbarMinimal.tsx";
-import "./Releases.module.css";
+import "./Inventory.module.css";
 
-const Releases: React.FC = () => {
+const Inventory: React.FC = () => {
   return (
     <div className="dashboard-container">
       <NavbarMinimal />
       <div className="dashboard-content">
-        <h1>Releases</h1>
-        <p>Welcome to the releases!</p>
+        <h1>Inventory</h1>
+        <p>Welcome to the inventory!</p>
       </div>
     </div>
   );
 };
 
-export default Releases;
+export default Inventory;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavbarMinimal } from '../../Components/Navbar/NavbarMinimal.tsx';
 import { TableSort } from '../../Components/TableSort/TableSort.tsx';
+import { ButtonMenu } from '../../Components/ButtonMenu/ButtonMenu.tsx';
 import './Orders.module.css';
 
 const Orders: React.FC = () => {
@@ -8,8 +9,7 @@ const Orders: React.FC = () => {
         <div className="orders-container">
             <NavbarMinimal />
             <TableSort />
-            <div className="orders-content">
-            </div>
+            <ButtonMenu />
         </div>
     );
 };

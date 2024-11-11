@@ -12,6 +12,7 @@ import {
     IconLogout,
     IconSun,
     IconMoon,
+    IconHelp,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { getAuth, signOut } from 'firebase/auth';
@@ -35,13 +36,12 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 }
 
 const buttons = [
-    { icon: IconHome2, label: 'Main Page', path: '/main-page' },
     { icon: IconGauge, label: 'Dashboard', path: '/dashboard' },
     { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
-    { icon: IconCalendarStats, label: 'Releases', path: '/releases' },
+    { icon: IconCalendarStats, label: 'Inventory', path: '/inventory' },
     { icon: IconUser, label: 'Account', path: '/account' },
     { icon: IconListSearch, label: 'Orders', path: '/orders' },
-    { icon: IconSettings, label: 'Settings', path: '/settings' },
+    { icon: IconHelp, label: 'Contact Us', path: '/contact-us' },
 ];
 
 export function NavbarMinimal() {
