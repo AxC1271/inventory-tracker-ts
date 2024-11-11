@@ -1,5 +1,6 @@
 import { MantineProvider } from "@mantine/core";
 import { Login } from "./assets/Components/Login/Login";
+import { ForgotPassword } from "./assets/Components/ForgotPassword/ForgotPassword";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./assets/Pages/Dashboard/Dashboard";
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Router>
           <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route 
           path="/dashboard"
           element={

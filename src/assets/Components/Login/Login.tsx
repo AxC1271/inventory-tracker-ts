@@ -193,6 +193,13 @@ export function Login(props: PaperProps) {
             {upperFirst(type)}
           </Button>
         </Group>
+        <Anchor
+        c="dimmed"
+        size="xs"
+        onClick={() => navigate("/forgot-password")}
+        >
+          Forgot your password?
+          </Anchor>
       </form>
     </Paper>
   );

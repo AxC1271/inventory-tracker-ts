@@ -39,8 +39,8 @@ const buttons = [
     { icon: IconGauge, label: 'Dashboard', path: '/dashboard' },
     { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
     { icon: IconCalendarStats, label: 'Inventory', path: '/inventory' },
-    { icon: IconUser, label: 'Account', path: '/account' },
     { icon: IconListSearch, label: 'Orders', path: '/orders' },
+    { icon: IconUser, label: 'Account', path: '/account' },
     { icon: IconHelp, label: 'Contact Us', path: '/contact-us' },
 ];
 
