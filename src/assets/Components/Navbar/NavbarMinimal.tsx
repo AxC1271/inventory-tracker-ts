@@ -14,6 +14,7 @@ import {
     IconMoon,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
+import { getAuth, signOut } from 'firebase/auth';
 import classes from './NavbarMinimal.module.css';
 
 interface NavbarLinkProps {
@@ -34,7 +35,7 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 }
 
 const buttons = [
-    { icon: IconHome2, label: 'Home', path: '/' },
+    { icon: IconHome2, label: 'Main Page', path: '/main-page' },
     { icon: IconGauge, label: 'Dashboard', path: '/dashboard' },
     { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
     { icon: IconCalendarStats, label: 'Releases', path: '/releases' },
@@ -48,6 +49,17 @@ export function NavbarMinimal() {
     const location = useLocation();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const [active, setActive] = useState(0);
+    const auth = getAuth();
+
+    const handleLogout = async () => {
+        try {
+          await signOut(auth);
+          localStorage.removeItem("userData");
+          navigate("/");
+        } catch (error) {
+          console.error("Error signing out: ", error);
+        }
+      };
 
     useEffect(() => {
         const currentPath = location.pathname;
@@ -85,7 +97,11 @@ export function NavbarMinimal() {
                     label="Toggle theme"
                     onClick={toggleColorScheme}
                 />
-                <NavbarLink icon={IconLogout} label="Logout" />
+                <NavbarLink
+                 icon={IconLogout} 
+                 label="Logout"
+                 onClick={handleLogout}
+                  />
             </Stack>
         </nav>
     );

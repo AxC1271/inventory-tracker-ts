@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../../firebase/firebase";
+import { auth, signInWithGoogle } from "../../../firebase/firebase";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import {
@@ -122,7 +122,12 @@ export function Login(props: PaperProps) {
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
+        <GoogleButton 
+        radius="xl"
+        onClick={() => {signInWithGoogle}}
+        >
+          Google
+        </GoogleButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />

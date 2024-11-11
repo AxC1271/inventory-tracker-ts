@@ -7,7 +7,7 @@ const Account: React.FC = () => {
       <NavbarMinimal />
       <div className="dashboard-content">
         <h1>Account</h1>
-        <p>Welcome to the account!</p>
+        <p>Welcome to your account!</p>
       </div>
     </div>
   );
