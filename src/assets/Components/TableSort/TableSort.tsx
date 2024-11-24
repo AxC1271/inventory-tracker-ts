@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore"; // import Firestore methods
+import { db } from "../../../firebase/firebase"; // Your Firebase config file
 import {
   Table,
   ScrollArea,
@@ -8,7 +10,6 @@ import {
   Center,
   TextInput,
   rem,
-  keys,
 } from "@mantine/core";
 import {
   IconSelector,
@@ -19,9 +20,10 @@ import {
 import classes from "./TableSort.module.css";
 
 interface RowData {
-  name: string;
-  email: string;
-  company: string;
+  orderer: string;
+  orderName: string;
+  status: string;
+  link: string;
 }
 
 interface ThProps {
@@ -56,7 +58,11 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
 function filterData(data: RowData[], search: string) {
   const query = search.toLowerCase().trim();
   return data.filter((item) =>
-    keys(data[0]).some((key) => item[key].toLowerCase().includes(query))
+    Object.keys(item).some((key) =>
+      (item[key as keyof RowData] as unknown as string)
+        .toLowerCase()
+        .includes(query)
+    )
   );
 }
 
@@ -70,108 +76,43 @@ function sortData(
     return filterData(data, payload.search);
   }
 
-  return filterData(
-    [...data].sort((a, b) => {
-      if (payload.reversed) {
-        return b[sortBy].localeCompare(a[sortBy]);
-      }
+  const sorted = [...data].sort((a, b) => {
+    if (payload.reversed) {
+      return b[sortBy].localeCompare(a[sortBy]);
+    }
+    return a[sortBy].localeCompare(b[sortBy]);
+  });
 
-      return a[sortBy].localeCompare(b[sortBy]);
-    }),
-    payload.search
-  );
+  return filterData(sorted, payload.search);
 }
 
-const data = [
-  {
-    name: "Athena Weissnat",
-    company: "Little - Rippin",
-    email: "Elouise.Prohaska@yahoo.com",
-  },
-  {
-    name: "Deangelo Runolfsson",
-    company: "Greenfelder - Krajcik",
-    email: "Kadin_Trantow87@yahoo.com",
-  },
-  {
-    name: "Danny Carter",
-    company: "Kohler and Sons",
-    email: "Marina3@hotmail.com",
-  },
-  {
-    name: "Trace Tremblay PhD",
-    company: "Crona, Aufderhar and Senger",
-    email: "Antonina.Pouros@yahoo.com",
-  },
-  {
-    name: "Derek Dibbert",
-    company: "Gottlieb LLC",
-    email: "Abagail29@hotmail.com",
-  },
-  {
-    name: "Viola Bernhard",
-    company: "Funk, Rohan and Kreiger",
-    email: "Jamie23@hotmail.com",
-  },
-  {
-    name: "Austin Jacobi",
-    company: "Botsford - Corwin",
-    email: "Genesis42@yahoo.com",
-  },
-  {
-    name: "Hershel Mosciski",
-    company: "Okuneva, Farrell and Kilback",
-    email: "Idella.Stehr28@yahoo.com",
-  },
-  {
-    name: "Mylene Ebert",
-    company: "Kirlin and Sons",
-    email: "Hildegard17@hotmail.com",
-  },
-  {
-    name: "Lou Trantow",
-    company: "Parisian - Lemke",
-    email: "Hillard.Barrows1@hotmail.com",
-  },
-  {
-    name: "Dariana Weimann",
-    company: "Schowalter - Donnelly",
-    email: "Colleen80@gmail.com",
-  },
-  {
-    name: "Dr. Christy Herman",
-    company: "VonRueden - Labadie",
-    email: "Lilyan98@gmail.com",
-  },
-  {
-    name: "Katelin Schuster",
-    company: "Jacobson - Smitham",
-    email: "Erich_Brekke76@gmail.com",
-  },
-  {
-    name: "Melyna Macejkovic",
-    company: "Schuster LLC",
-    email: "Kylee4@yahoo.com",
-  },
-  {
-    name: "Pinkie Rice",
-    company: "Wolf, Trantow and Zulauf",
-    email: "Fiona.Kutch@hotmail.com",
-  },
-  {
-    name: "Brain Kreiger",
-    company: "Lueilwitz Group",
-    email: "Rico98@hotmail.com",
-  },
-];
-
-
 export function TableSort() {
-  const [search, setSearch] = useState("");
-  const [sortedData, setSortedData] = useState(data);
+  const [search, setSearch] = useState<string>("");
+  const [data, setData] = useState<RowData[]>([]);
+  const [sortedData, setSortedData] = useState<RowData[]>([]);
   const [sortBy, setSortBy] = useState<keyof RowData | null>(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState<string | null>(null); // Add error state
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "orders"));
+        const ordersData = querySnapshot.docs.map(
+          (doc) => doc.data() as RowData
+        );
+        setData(ordersData);
+        setSortedData(ordersData);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch data");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const setSorting = (field: keyof RowData) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -188,11 +129,20 @@ export function TableSort() {
     );
   };
 
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>{error}</Text>;
+  }
+
   const rows = sortedData.map((row) => (
-    <Table.Tr key={row.name}>
-      <Table.Td>{row.name}</Table.Td>
-      <Table.Td>{row.email}</Table.Td>
-      <Table.Td>{row.company}</Table.Td>
+    <Table.Tr key={row.orderer + row.orderName + row.status + row.link}>
+      <Table.Td>{row.orderer}</Table.Td>
+      <Table.Td>{row.orderName}</Table.Td>
+      <Table.Td>{row.status}</Table.Td>
+      <Table.Td>{row.link}</Table.Td>
     </Table.Tr>
   ));
 
@@ -219,25 +169,32 @@ export function TableSort() {
         <Table.Tbody>
           <Table.Tr>
             <Th
-              sorted={sortBy === "name"}
+              sorted={sortBy === "orderer"}
               reversed={reverseSortDirection}
-              onSort={() => setSorting("name")}
+              onSort={() => setSorting("orderer")}
             >
-              Name
+              Orderer
             </Th>
             <Th
-              sorted={sortBy === "email"}
+              sorted={sortBy === "orderName"}
               reversed={reverseSortDirection}
-              onSort={() => setSorting("email")}
+              onSort={() => setSorting("orderName")}
             >
-              Email
+              Order Name
             </Th>
             <Th
-              sorted={sortBy === "company"}
+              sorted={sortBy === "status"}
               reversed={reverseSortDirection}
-              onSort={() => setSorting("company")}
+              onSort={() => setSorting("status")}
             >
-              Company
+              Status
+            </Th>
+            <Th
+              sorted={sortBy === "link"}
+              reversed={reverseSortDirection}
+              onSort={() => setSorting("link")}
+            >
+              Link
             </Th>
           </Table.Tr>
         </Table.Tbody>
@@ -246,7 +203,7 @@ export function TableSort() {
             rows
           ) : (
             <Table.Tr>
-              <Table.Td colSpan={Object.keys(data[0]).length}>
+              <Table.Td colSpan={4}>
                 <Text fw={500} ta="center">
                   Nothing found
                 </Text>

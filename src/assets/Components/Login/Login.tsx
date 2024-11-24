@@ -186,8 +186,8 @@ export function Login(props: PaperProps) {
             size="xs"
           >
             {type === "register"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
+              ? "Already have an account? Login!"
+              : "Don't have an account? Register!"}
           </Anchor>
           <Button type="submit" radius="xl">
             {upperFirst(type)}
