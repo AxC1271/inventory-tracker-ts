@@ -7,8 +7,6 @@ import {
     IconDeviceDesktopAnalytics,
     IconListSearch,
     IconCalendarStats,
-    IconUser,
-    IconSettings,
     IconLogout,
     IconSun,
     IconMoon,
@@ -40,7 +38,6 @@ const buttons = [
     { icon: IconDeviceDesktopAnalytics, label: 'Analytics', path: '/analytics' },
     { icon: IconCalendarStats, label: 'Inventory', path: '/inventory' },
     { icon: IconListSearch, label: 'Orders', path: '/orders' },
-    { icon: IconUser, label: 'Account', path: '/account' },
     { icon: IconHelp, label: 'Contact Us', path: '/contact-us' },
 ];
 

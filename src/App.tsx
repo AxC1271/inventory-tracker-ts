@@ -8,7 +8,6 @@ import ContactPage from "./assets/Pages/ContactPage/ContactPage";
 import Orders from "./assets/Pages/Orders/Orders";
 import Analytics from "./assets/Pages/Analytics/Analytics";
 import Inventory from "./assets/Pages/Inventory/Inventory";
-import Account from "./assets/Pages/Account/Account";
 import { AuthProvider } from "../src/auth/AuthContext";
 import "@mantine/core/styles.css";
 import "./App.css";
@@ -59,14 +58,6 @@ const App: React.FC = () => {
           element={
             <PrivateRoute>
               <Inventory />
-            </PrivateRoute>
-          }
-           />
-           <Route 
-          path="/account"
-          element={
-            <PrivateRoute>
-              <Account />
             </PrivateRoute>
           }
            />
