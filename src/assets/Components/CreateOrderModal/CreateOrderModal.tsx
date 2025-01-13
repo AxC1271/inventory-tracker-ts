@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button, TextInput } from '@mantine/core';
+import '@mantine/core/styles.css';
 import { useForm } from '@mantine/form';
 
 interface CreateOrderModalProps {
@@ -21,7 +22,18 @@ const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ opened, onClose }) 
   };
 
   return (
-    <Modal opened={opened} onClose={onClose} title="Create Order">
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title="Create Order"
+      overlayProps={{
+        style: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
+        },
+      }}
+      withinPortal={false}
+    >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label="Order Name"

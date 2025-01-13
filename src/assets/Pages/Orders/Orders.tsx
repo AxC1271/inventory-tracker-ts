@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavbarMinimal } from '../../Components/Navbar/NavbarMinimal.tsx';
 import { TableSort } from '../../Components/TableSort/TableSort.tsx';
 import { ButtonMenu } from '../../Components/ButtonMenu/ButtonMenu.tsx';
@@ -11,14 +11,20 @@ const Orders: React.FC = () => {
     const openModalForm = () => {
         setModalOpened(true);
     }
+
     const handleModalClose = () => {
         setModalOpened(false);
     };
+
+    useEffect(() => {
+        console.log(modalOpened);
+    }, [modalOpened])
+
     return (
         <div className="orders-container">
             <NavbarMinimal />
             <TableSort />
-            <ButtonMenu />
+            <ButtonMenu onCreateOrderClick={openModalForm} />
             <CreateOrderModal opened={modalOpened} onClose={handleModalClose} />
         </div>
     );
